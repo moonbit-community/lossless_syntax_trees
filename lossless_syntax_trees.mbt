@@ -5,11 +5,11 @@
 // ==================== Core Data Structures ====================
 
 /// 语法节点种类标识符，用于区分不同类型的语法元素
-pub typealias String as SyntaxKind
+pub type SyntaxKind = String
 
 /// Trivia 表示源码中的非语义信息（空白、注释等）
 /// 格式: (kind, text) 其中 kind 为 trivia 类型，text 为实际文本内容
-pub typealias (String, String) as Trivia  // (kind, text)
+pub type Trivia = (String, String)  // (kind, text)
 
 /// RawSyntax 是核心的不可变、可共享的语法节点存储结构
 /// 不变式: 
@@ -30,16 +30,16 @@ pub struct RawSyntax {
 /// SyntaxBuilder 用于增量构建语法树
 /// 格式: (children, leading_trivia, trailing_trivia, is_missing)
 /// 典型流程: new_builder -> add_child* -> add_trivia* -> build_from_builder
-pub typealias (Array[RawSyntax], Array[Trivia], Array[Trivia], Bool) as SyntaxBuilder
+pub type SyntaxBuilder = (Array[RawSyntax], Array[Trivia], Array[Trivia], Bool)
 // (children, leading_trivia, trailing_trivia, is_missing)
 
 /// Syntax 为类型安全的语法节点包装器
 /// 格式: (raw, node_type) 提供额外的类型信息用于类型检查
-pub typealias (RawSyntax, String) as Syntax  // (raw, node_type)
+pub type Syntax = (RawSyntax, String)  // (raw, node_type)
 
 /// TokenRange 将 token 映射到打印文本中的字符偏移范围
 /// 格式: (token, start_offset, end_offset) 表示 [start, end) 半开区间
-pub typealias (RawSyntax, Int, Int) as TokenRange
+pub type TokenRange = (RawSyntax, Int, Int)
 
 // ==================== Trivia Creation Functions ====================
 
@@ -2509,4 +2509,3 @@ pub fn roundtrip_print_minilexer(source: String) -> String {
     let root = lex_minimal_build_tree(source)
     lossless_print(root)
 }
-

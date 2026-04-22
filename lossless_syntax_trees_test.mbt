@@ -5,9 +5,9 @@ test "basic trivia creation" {
     let comment = comment_trivia("// test")
     let newline = newline_trivia("\n")
     
-    if not (is_whitespace_trivia(ws)) { panic() }
-    if not (is_comment_trivia(comment)) { panic() }
-    if not (is_newline_trivia(newline)) { panic() }
+    if !is_whitespace_trivia(ws) { panic() }
+    if !is_comment_trivia(comment) { panic() }
+    if !is_newline_trivia(newline) { panic() }
 }
 
 test "basic token creation" {
@@ -17,7 +17,7 @@ test "basic token creation" {
     
     if syntax_kind(token) != "token" { panic() }
     if syntax_text(token) != "hello" { panic() }
-    if not (is_token(token)) { panic() }
+    if !is_token(token) { panic() }
     if is_missing(token) { panic() }
 }
 
@@ -30,19 +30,19 @@ test "basic node creation" {
     let node = make_node(children, [], [])
     
     if syntax_kind(node) != "node" { panic() }
-    if not (is_node(node)) { panic() }
+    if !is_node(node) { panic() }
     if child_count(node) != 3 { panic() }
 }
 
 test "missing and error nodes" {
     let missing = make_missing()
     if syntax_kind(missing) != "missing" { panic() }
-    if not (is_missing(missing)) { panic() }
+    if !is_missing(missing) { panic() }
     if is_complete(missing) { panic() }
     
     let error = make_error("test error")
     if syntax_kind(error) != "error" { panic() }
-    if not (is_error(error)) { panic() }
+    if !is_error(error) { panic() }
     if syntax_text(error) != "test error" { panic() }
 }
 
@@ -105,7 +105,7 @@ test "tree analysis basic" {
     if is_leaf_node(node) { panic() }
     
     let token = make_token("test", [], [])
-    if not (is_leaf_node(token)) { panic() }
+    if !is_leaf_node(token) { panic() }
 }
 
 test "search functions" {
@@ -158,7 +158,7 @@ test "advanced trivia functions" {
     let trailing = [comment_trivia("// comment")]
     let token = make_token("test", leading, trailing)
     
-    if not (has_newline_trivia(token)) { panic() }
+    if !has_newline_trivia(token) { panic() }
     
     let comment_count = count_comment_trivia(token)
     if comment_count != 1 { panic() }
@@ -183,7 +183,7 @@ test "node manipulation" {
 
 test "error recovery" {
     let error_node = create_error_recovery_node("identifier", "keyword")
-    if not (is_error(error_node)) { panic() }
+    if !is_error(error_node) { panic() }
     
     let token = make_token("test", [], [])
     let wrapped = wrap_in_error_recovery(token, "test context")
@@ -278,7 +278,7 @@ test "tree depth and width analysis" {
 test "leaf node collection" {
     // Test leaf node detection and collection
     let token = make_token("leaf", [], [])
-    if not (is_leaf_node(token)) { panic() }
+    if !is_leaf_node(token) { panic() }
     
     let leaves = get_all_leaf_nodes(token)
     if leaves.length() == 0 { panic() }
@@ -308,7 +308,7 @@ test "trivia edge cases" {
     let trailing = [newline_trivia("\n"), comment_trivia("// test")]
     let token = make_token("test", [], trailing)
     
-    if not (has_newline_trivia(token)) { panic() }
+    if !has_newline_trivia(token) { panic() }
     
     // Test leading comment count
     let leading = [comment_trivia("// first"), whitespace_trivia(" "), comment_trivia("// second")]
@@ -446,14 +446,14 @@ test "strict trivia normalization - move trailing newline to next leading" {
     // After strict: first trailing should only keep inline whitespace (no newline)
     let first_trailing = trailing_trivia(first)
     if first_trailing.length() != 1 { panic() }
-    if not (is_whitespace_trivia(first_trailing[0])) { panic() }
+    if !is_whitespace_trivia(first_trailing[0]) { panic() }
 
     // Second leading should start with newline then comment then its original whitespace
     let second_leading = leading_trivia(second)
     if second_leading.length() != 3 { panic() }
-    if not (is_newline_trivia(second_leading[0])) { panic() }
-    if not (is_comment_trivia(second_leading[1])) { panic() }
-    if not (is_whitespace_trivia(second_leading[2])) { panic() }
+    if !is_newline_trivia(second_leading[0]) { panic() }
+    if !is_comment_trivia(second_leading[1]) { panic() }
+    if !is_whitespace_trivia(second_leading[2]) { panic() }
 
     // Text must be identical
     let printed_after = lossless_print_strict(node)
@@ -478,8 +478,8 @@ test "strict trivia normalization - move leading w/o newline back to previous tr
     // First trailing should contain the moved two trivia pieces
     let ft = trailing_trivia(first)
     if ft.length() != 2 { panic() }
-    if not (is_whitespace_trivia(ft[0])) { panic() }
-    if not (is_comment_trivia(ft[1])) { panic() }
+    if !is_whitespace_trivia(ft[0]) { panic() }
+    if !is_comment_trivia(ft[1]) { panic() }
 
     let after = lossless_print_strict(node)
     if after != "x  // cy" { panic() }
@@ -515,7 +515,7 @@ test "offset computation and lookup" {
 test "structural equality" {
     let a = make_node([make_token("x", [], [])], [], [])
     let b = make_node([make_token("x", [], [])], [], [])
-    if not (structural_equal(a, b)) { panic() }
+    if !structural_equal(a, b) { panic() }
 
     let c = make_node([make_token("y", [], [])], [], [])
     if structural_equal(a, c) { panic() }
@@ -583,9 +583,9 @@ test "extended trivia kinds" {
     let r = trailing_trivia(t)
     if l.length() == 0 { panic() }
     if r.length() == 0 { panic() }
-    if not (is_shebang_trivia(l[0])) { panic() }
-    if not (is_doc_comment_trivia(l[1])) { panic() }
-    if not (is_block_comment_trivia(r[0])) { panic() }
+    if !is_shebang_trivia(l[0]) { panic() }
+    if !is_doc_comment_trivia(l[1]) { panic() }
+    if !is_block_comment_trivia(r[0]) { panic() }
 }
 
 test "additional path utilities" {
@@ -653,7 +653,7 @@ test "arena interning" {
     let (arena2, tok2) = arena_intern_token(arena1, "id", [whitespace_trivia(" ")], [newline_trivia("\n")])
 
     // Should reuse
-    if not (structural_equal(tok1, tok2)) { panic() }
+    if !structural_equal(tok1, tok2) { panic() }
     if arena_token_count(arena2) != 1 { panic() }
 
     // Intern a different token
@@ -665,7 +665,7 @@ test "arena interning" {
     let (arena4, node1) = arena_intern_node(arena3, children, [], [])
     let (arena5, node2) = arena_intern_node(arena4, children, [], [])
 
-    if not (structural_equal(node1, node2)) { panic() }
+    if !structural_equal(node1, node2) { panic() }
     if arena_node_count(arena5) != 1 { panic() }
 }
 
@@ -736,7 +736,7 @@ test "minimal lexer adapter structure" {
     let children = syntax_children(root)
     if children.length() != 1 { panic() }
     let tok = children[0]
-    if not (is_token(tok)) { panic() }
+    if !is_token(tok) { panic() }
     if syntax_text(tok) != src { panic() }
 }
 
@@ -748,9 +748,9 @@ test "normalize: node-level trivia preserved when no tokens" {
     let lt = leading_trivia(normalized)
     let tt = trailing_trivia(normalized)
     if lt.length() != 1 { panic() }
-    if not (is_whitespace_trivia(lt[0])) { panic() }
+    if !is_whitespace_trivia(lt[0]) { panic() }
     if tt.length() != 1 { panic() }
-    if not (is_newline_trivia(tt[0])) { panic() }
+    if !is_newline_trivia(tt[0]) { panic() }
 }
 
 // 覆盖严格规范步骤1末尾分支：最后一个 token 仍保留换行及其后的内容在 trailing
@@ -762,9 +762,9 @@ test "strict: last token keeps newline in trailing" {
     let toks = collect_tokens(strict)
     let tr = trailing_trivia(toks[0])
     if tr.length() != 3 { panic() }
-    if not (is_whitespace_trivia(tr[0])) { panic() }
-    if not (is_newline_trivia(tr[1])) { panic() }
-    if not (is_comment_trivia(tr[2])) { panic() }
+    if !is_whitespace_trivia(tr[0]) { panic() }
+    if !is_newline_trivia(tr[1]) { panic() }
+    if !is_comment_trivia(tr[2]) { panic() }
 }
 
 // 覆盖严格校验器三类错误分支
@@ -776,7 +776,7 @@ test "strict validator: trailing newline before last token" {
     let errs = validate_trivia_ownership_strict(root)
     let mut found = false
     for e in errs { if e == "Trailing trivia before last token contains newline" { found = true } }
-    if not (found) { panic() }
+    if !found { panic() }
 }
 
 test "strict validator: non-first leading without newline" {
@@ -786,7 +786,7 @@ test "strict validator: non-first leading without newline" {
     let errs = validate_trivia_ownership_strict(root)
     let mut found = false
     for e in errs { if e == "Leading trivia on non-first token has no newline" { found = true } }
-    if not (found) { panic() }
+    if !found { panic() }
 }
 
 test "strict validator: non-first leading must start with newline" {
@@ -796,7 +796,7 @@ test "strict validator: non-first leading must start with newline" {
     let errs = validate_trivia_ownership_strict(root)
     let mut found = false
     for e in errs { if e == "Leading trivia on non-first token must start with newline" { found = true } }
-    if not (found) { panic() }
+    if !found { panic() }
 }
 
 // 覆盖 builder 的 mark_missing 分支
@@ -806,7 +806,7 @@ test "builder: mark missing" {
     let b1 = add_child(b0, make_token("x", [], []))
     let b2 = mark_missing(b1, true)
     let node = build_from_builder(b2, "node", "")
-    if not (is_missing(node)) { panic() }
+    if !is_missing(node) { panic() }
 }
 
 

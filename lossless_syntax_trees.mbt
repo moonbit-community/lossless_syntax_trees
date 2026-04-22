@@ -231,7 +231,7 @@ pub fn is_error(raw: RawSyntax) -> Bool {
 /// 返回: 如果节点完整则返回 true，否则返回 false
 /// 复杂度: O(1)
 pub fn is_complete(raw: RawSyntax) -> Bool {
-    not (is_missing(raw))
+    !is_missing(raw)
 }
 
 // ==================== Trivia Checking Functions ====================
@@ -667,7 +667,7 @@ pub fn validate_syntax_tree(raw: RawSyntax) -> Array[String] {
     
     // Check for missing nodes in non-error contexts
     if is_missing(raw) {
-        if not (is_error(raw)) {
+        if !is_error(raw) {
             errors = errors + ["Missing node found in non-error context"]
         }
     }
@@ -675,7 +675,7 @@ pub fn validate_syntax_tree(raw: RawSyntax) -> Array[String] {
     // Check for empty nodes
     if syntax_text(raw) == "" {
         if array_length(syntax_children(raw)) == 0 {
-            if not (is_missing(raw)) {
+            if !is_missing(raw) {
                 errors = errors + ["Empty node found"]
             }
         }
@@ -874,7 +874,7 @@ fn prepend_trivia_to_first_token_impl(raw: RawSyntax, trivias: Array[Trivia]) ->
         let mut new_children = []
         let mut applied = false
         for child in children {
-            if not (applied) {
+            if !applied {
                 let (child_updated, did) = prepend_trivia_to_first_token_impl(child, trivias)
                 new_children = new_children + [child_updated]
                 applied = did
@@ -910,7 +910,7 @@ fn append_trivia_to_last_token_impl(raw: RawSyntax, trivias: Array[Trivia]) -> (
         let mut processed_reversed = []
         let mut applied = false
         for child in reversed {
-            if not (applied) {
+            if !applied {
                 let (child_updated, did) = append_trivia_to_last_token_impl(child, trivias)
                 processed_reversed = processed_reversed + [child_updated]
                 applied = did
@@ -1107,7 +1107,7 @@ pub fn normalize_trivia_ownership_strict(raw: RawSyntax) -> RawSyntax {
     let mut j = 1 // start from second token
     while j < n {
         let lead = new_leading_list[j]
-        if not (trivia_list_has_newline(lead)) {
+        if !trivia_list_has_newline(lead) {
             // move entire leading to previous trailing
             let prev_trailing = new_trailing_list[j - 1]
             let moved_trailing = prev_trailing + lead
@@ -1164,12 +1164,12 @@ pub fn validate_trivia_ownership_strict(raw: RawSyntax) -> Array[String] {
 
         if i > 0 {
             let lead_len = array_length_trivia(lead)
-            if lead_len != 0 && not (trivia_list_has_newline(lead)) {
+            if lead_len != 0 && !trivia_list_has_newline(lead) {
                 errors = errors + ["Leading trivia on non-first token has no newline"]
             } else {
                 if trivia_list_has_newline(lead) {
                     let first = lead[0]
-                    if not (is_newline_trivia(first)) {
+                    if !is_newline_trivia(first) {
                         errors = errors + ["Leading trivia on non-first token must start with newline"]
                     }
                 }
@@ -1262,7 +1262,7 @@ fn split_trailing_at_first_newline(trivia_list: Array[Trivia]) -> (Array[Trivia]
     let mut rest = []
     let mut found = false
     for t in trivia_list {
-        if not (found) {
+        if !found {
             if is_newline_trivia(t) {
                 found = true
                 rest = rest + [t]
@@ -1463,7 +1463,7 @@ pub fn strip_leading_whitespace_trivia(token: RawSyntax) -> RawSyntax {
     let leading = leading_trivia(token)
     let mut filtered = []
     for t in leading {
-        if not (is_whitespace_trivia(t)) {
+        if !is_whitespace_trivia(t) {
             filtered = filtered + [t]
         }
     }
@@ -1479,7 +1479,7 @@ pub fn strip_trailing_whitespace_trivia(token: RawSyntax) -> RawSyntax {
     let trailing = trailing_trivia(token)
     let mut filtered = []
     for t in trailing {
-        if not (is_whitespace_trivia(t)) {
+        if !is_whitespace_trivia(t) {
             filtered = filtered + [t]
         }
     }
@@ -1731,7 +1731,7 @@ fn replace_range_in_array(arr: Array[RawSyntax], start: Int, end: Int, replaceme
         } else if index >= start && index < end {
             // skip elements in [start, end)
         } else {
-            if not (inserted) {
+            if !inserted {
                 for r in replacement { result = result + [r] }
                 inserted = true
             }
@@ -1739,7 +1739,7 @@ fn replace_range_in_array(arr: Array[RawSyntax], start: Int, end: Int, replaceme
         }
         index = index + 1
     }
-    if not (inserted) {
+    if !inserted {
         for r in replacement { result = result + [r] }
     }
     result
@@ -1852,8 +1852,8 @@ pub fn structural_equal(a: RawSyntax, b: RawSyntax) -> Bool {
     if syntax_kind(a) != syntax_kind(b) { return false }
     if syntax_text(a) != syntax_text(b) { return false }
     if is_missing(a) != is_missing(b) { return false }
-    if not (trivia_lists_equal(leading_trivia(a), leading_trivia(b))) { return false }
-    if not (trivia_lists_equal(trailing_trivia(a), trailing_trivia(b))) { return false }
+    if !trivia_lists_equal(leading_trivia(a), leading_trivia(b)) { return false }
+    if !trivia_lists_equal(trailing_trivia(a), trailing_trivia(b)) { return false }
 
     let ca = syntax_children(a)
     let cb = syntax_children(b)
@@ -1861,7 +1861,7 @@ pub fn structural_equal(a: RawSyntax, b: RawSyntax) -> Bool {
 
     let mut i = 0
     for _ in ca {
-        if not (structural_equal(ca[i], cb[i])) { return false }
+        if !structural_equal(ca[i], cb[i]) { return false }
         i = i + 1
     }
     true
@@ -1876,7 +1876,7 @@ fn trivia_lists_equal(a: Array[Trivia], b: Array[Trivia]) -> Bool {
     if array_length_trivia(a) != array_length_trivia(b) { return false }
     let mut i = 0
     for _ in a {
-        if not (trivia_equal(a[i], b[i])) { return false }
+        if !trivia_equal(a[i], b[i]) { return false }
         i = i + 1
     }
     true
@@ -2442,7 +2442,7 @@ pub fn prune_missing_nodes(raw: RawSyntax) -> RawSyntax {
     let children = syntax_children(raw)
     let mut new_children = []
     for child in children {
-        if not (is_missing(child)) {
+        if !is_missing(child) {
             let updated = prune_missing_nodes(child)
             new_children = new_children + [updated]
         }

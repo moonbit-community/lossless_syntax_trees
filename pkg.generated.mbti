@@ -1,0 +1,248 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "0Ayachi0/lossless_syntax_trees"
+
+// Values
+pub fn add_child((Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool), RawSyntax) -> (Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool)
+
+pub fn add_leading_trivia((Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool), (String, String)) -> (Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool)
+
+pub fn add_trailing_trivia((Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool), (String, String)) -> (Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool)
+
+pub fn append_child(RawSyntax, RawSyntax) -> RawSyntax
+
+pub fn append_node_at_path(RawSyntax, Array[Int], RawSyntax) -> RawSyntax
+
+pub fn arena_intern_node(Arena, Array[RawSyntax], Array[(String, String)], Array[(String, String)]) -> (Arena, RawSyntax)
+
+pub fn arena_intern_token(Arena, String, Array[(String, String)], Array[(String, String)]) -> (Arena, RawSyntax)
+
+pub fn arena_node_count(Arena) -> Int
+
+pub fn arena_token_count(Arena) -> Int
+
+pub fn block_comment_trivia(String) -> (String, String)
+
+pub fn breadth_first_traversal(RawSyntax) -> Array[RawSyntax]
+
+pub fn build_from_builder((Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool), String, String) -> RawSyntax
+
+pub fn child_count(RawSyntax) -> Int
+
+pub fn collect_tokens(RawSyntax) -> Array[RawSyntax]
+
+pub fn comment_trivia(String) -> (String, String)
+
+pub fn compute_token_offsets(RawSyntax) -> Array[(RawSyntax, Int, Int)]
+
+pub fn compute_token_offsets_strict(RawSyntax) -> Array[(RawSyntax, Int, Int)]
+
+pub fn count_comment_trivia(RawSyntax) -> Int
+
+pub fn count_nodes(RawSyntax) -> Int
+
+pub fn count_tokens(RawSyntax) -> Int
+
+pub fn create_error_recovery_node(String, String) -> RawSyntax
+
+pub fn debug_tree(RawSyntax) -> String
+
+pub fn debug_tree_with_trivia(RawSyntax) -> String
+
+pub fn delete_node_by_path(RawSyntax, Array[Int]) -> RawSyntax
+
+pub fn doc_comment_trivia(String) -> (String, String)
+
+pub fn ensure_lossless_invariants(RawSyntax) -> Array[String]
+
+pub fn extract_all_trivia(RawSyntax) -> Array[(String, String)]
+
+pub fn find_error_nodes(RawSyntax) -> Array[RawSyntax]
+
+pub fn find_nodes_of_kind(RawSyntax, String) -> Array[RawSyntax]
+
+pub fn find_path_to_nth_token(RawSyntax, Int) -> Array[Int]?
+
+pub fn find_path_to_token_text(RawSyntax, String) -> Array[Int]?
+
+pub fn find_paths_to_token_text_all(RawSyntax, String) -> Array[Array[Int]]
+
+pub fn find_token_at_offset(RawSyntax, Int) -> RawSyntax?
+
+pub fn find_token_at_offset_strict(RawSyntax, Int) -> RawSyntax?
+
+pub fn find_tokens_with_text(RawSyntax, String) -> Array[RawSyntax]
+
+pub fn first_child(RawSyntax) -> RawSyntax?
+
+pub fn get_all_leaf_nodes(RawSyntax) -> Array[RawSyntax]
+
+pub fn get_node_by_path(RawSyntax, Array[Int]) -> RawSyntax?
+
+pub fn get_node_depth(RawSyntax) -> Int
+
+pub fn get_tree_width(RawSyntax) -> Int
+
+pub fn has_newline_trivia(RawSyntax) -> Bool
+
+pub fn insert_child(RawSyntax, Int, RawSyntax) -> RawSyntax
+
+pub fn insert_node_at_path(RawSyntax, Array[Int], Int, RawSyntax) -> RawSyntax
+
+pub fn is_block_comment_trivia((String, String)) -> Bool
+
+pub fn is_comment_trivia((String, String)) -> Bool
+
+pub fn is_complete(RawSyntax) -> Bool
+
+pub fn is_doc_comment_trivia((String, String)) -> Bool
+
+pub fn is_error(RawSyntax) -> Bool
+
+pub fn is_leaf_node(RawSyntax) -> Bool
+
+pub fn is_missing(RawSyntax) -> Bool
+
+pub fn is_newline_trivia((String, String)) -> Bool
+
+pub fn is_node(RawSyntax) -> Bool
+
+pub fn is_shebang_trivia((String, String)) -> Bool
+
+pub fn is_token(RawSyntax) -> Bool
+
+pub fn is_whitespace_trivia((String, String)) -> Bool
+
+pub fn last_child(RawSyntax) -> RawSyntax?
+
+pub fn leading_trivia(RawSyntax) -> Array[(String, String)]
+
+pub fn lex_minimal_build_tree(String) -> RawSyntax
+
+pub fn lossless_print(RawSyntax) -> String
+
+pub fn lossless_print_strict(RawSyntax) -> String
+
+pub fn make_error(String) -> RawSyntax
+
+pub fn make_missing() -> RawSyntax
+
+pub fn make_node(Array[RawSyntax], Array[(String, String)], Array[(String, String)]) -> RawSyntax
+
+pub fn make_token(String, Array[(String, String)], Array[(String, String)]) -> RawSyntax
+
+pub fn mark_missing((Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool), Bool) -> (Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool)
+
+pub fn move_child(RawSyntax, Int, Int) -> RawSyntax
+
+pub fn new_arena() -> Arena
+
+pub fn new_builder() -> (Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool)
+
+pub fn newline_trivia(String) -> (String, String)
+
+pub fn node_type((RawSyntax, String)) -> String
+
+pub fn normalize_trivia_ownership(RawSyntax) -> RawSyntax
+
+pub fn normalize_trivia_ownership_strict(RawSyntax) -> RawSyntax
+
+pub fn optimize_trivia(RawSyntax) -> RawSyntax
+
+pub fn postorder_traversal(RawSyntax) -> Array[RawSyntax]
+
+pub fn preorder_traversal(RawSyntax) -> Array[RawSyntax]
+
+pub fn prepend_child(RawSyntax, RawSyntax) -> RawSyntax
+
+pub fn prune_missing_nodes(RawSyntax) -> RawSyntax
+
+pub fn raw_syntax((RawSyntax, String)) -> RawSyntax
+
+pub fn rebuild_text(RawSyntax) -> String
+
+pub fn remove_child(RawSyntax, Int) -> RawSyntax
+
+pub fn replace_child_text_at(RawSyntax, Int, String) -> RawSyntax
+
+pub fn replace_children_range(RawSyntax, Int, Int, Array[RawSyntax]) -> RawSyntax
+
+pub fn replace_node_by_path(RawSyntax, Array[Int], RawSyntax) -> RawSyntax
+
+pub fn replace_tokens_text(RawSyntax, String, String) -> RawSyntax
+
+pub fn roundtrip_print_minilexer(String) -> String
+
+pub fn roundtrip_print_simple(String) -> String
+
+pub fn shebang_trivia(String) -> (String, String)
+
+pub fn splice_children(RawSyntax, Int, Int, Array[RawSyntax]) -> RawSyntax
+
+pub fn strip_leading_whitespace_trivia(RawSyntax) -> RawSyntax
+
+pub fn strip_trailing_whitespace_trivia(RawSyntax) -> RawSyntax
+
+pub fn structural_equal(RawSyntax, RawSyntax) -> Bool
+
+pub fn syntax(RawSyntax, String) -> (RawSyntax, String)
+
+pub fn syntax_children(RawSyntax) -> Array[RawSyntax]
+
+pub fn syntax_kind(RawSyntax) -> String
+
+pub fn syntax_text(RawSyntax) -> String
+
+pub fn tokenize_whitespace_only(String) -> RawSyntax
+
+pub fn tokenize_whitespace_split(String) -> RawSyntax
+
+pub fn trailing_trivia(RawSyntax) -> Array[(String, String)]
+
+pub fn validate_syntax_tree(RawSyntax) -> Array[String]
+
+pub fn validate_trivia_ownership_strict(RawSyntax) -> Array[String]
+
+pub fn whitespace_trivia(String) -> (String, String)
+
+pub fn with_child(RawSyntax, Int, RawSyntax) -> RawSyntax
+
+pub fn with_leading_trivia(RawSyntax, Array[(String, String)]) -> RawSyntax
+
+pub fn with_text(RawSyntax, String) -> RawSyntax
+
+pub fn with_trailing_trivia(RawSyntax, Array[(String, String)]) -> RawSyntax
+
+pub fn wrap_in_error_recovery(RawSyntax, String) -> RawSyntax
+
+// Errors
+
+// Types and methods
+pub struct Arena {
+  tokens : Array[RawSyntax]
+  nodes : Array[RawSyntax]
+  token_index : Map[String, RawSyntax]
+  node_index : Map[String, RawSyntax]
+}
+
+pub struct RawSyntax {
+  kind : String
+  text : String
+  children : Array[RawSyntax]
+  leading_trivia : Array[(String, String)]
+  trailing_trivia : Array[(String, String)]
+  is_missing : Bool
+}
+
+// Type aliases
+pub type Syntax = (RawSyntax, String)
+
+pub type SyntaxBuilder = (Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool)
+
+pub type SyntaxKind = String
+
+pub type TokenRange = (RawSyntax, Int, Int)
+
+pub type Trivia = (String, String)
+
+// Traits
+

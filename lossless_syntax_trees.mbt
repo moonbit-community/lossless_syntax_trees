@@ -644,7 +644,7 @@ pub fn postorder_traversal(raw: RawSyntax) -> Array[RawSyntax] {
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的子节点数量
 pub fn breadth_first_traversal(raw: RawSyntax) -> Array[RawSyntax] {
     let mut result = []
-    let queue = @queue.of([raw])
+    let queue = @queue.from_array([raw])
     
     while queue.pop() is Some(current) {
         result = result + [current]

@@ -1,0 +1,9 @@
+import {
+  "moonbitlang/core/queue",
+}
+
+warnings = "-1"
+
+options(
+  dependencies: { "moonbitlang/core": "0.1.0" },
+)

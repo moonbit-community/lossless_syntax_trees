@@ -2707,8 +2707,8 @@ pub struct Arena {
 /// 返回: 初始化后的 Arena
 /// 复杂度: O(1)
 pub fn new_arena() -> Arena {
-  let empty_tok_index : Map[String, RawSyntax] = Map::of([])
-  let empty_node_index : Map[String, RawSyntax] = Map::of([])
+  let empty_tok_index : Map[String, RawSyntax] = Map([])
+  let empty_node_index : Map[String, RawSyntax] = Map([])
   Arena::{
     tokens: [],
     nodes: [],

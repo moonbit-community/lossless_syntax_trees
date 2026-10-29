@@ -10,15 +10,15 @@ pub fn add_trailing_trivia((Array[RawSyntax], Array[(String, String)], Array[(St
 
 pub fn append_child(RawSyntax, RawSyntax) -> RawSyntax
 
-pub fn append_node_at_path(RawSyntax, Array[Int], RawSyntax) -> RawSyntax
+pub fn append_node_at_path(RawSyntax, Array[Int32], RawSyntax) -> RawSyntax
 
 pub fn arena_intern_node(Arena, Array[RawSyntax], Array[(String, String)], Array[(String, String)]) -> (Arena, RawSyntax)
 
 pub fn arena_intern_token(Arena, String, Array[(String, String)], Array[(String, String)]) -> (Arena, RawSyntax)
 
-pub fn arena_node_count(Arena) -> Int
+pub fn arena_node_count(Arena) -> Int32
 
-pub fn arena_token_count(Arena) -> Int
+pub fn arena_token_count(Arena) -> Int32
 
 pub fn block_comment_trivia(String) -> (String, String)
 
@@ -26,21 +26,21 @@ pub fn breadth_first_traversal(RawSyntax) -> Array[RawSyntax]
 
 pub fn build_from_builder((Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool), String, String) -> RawSyntax
 
-pub fn child_count(RawSyntax) -> Int
+pub fn child_count(RawSyntax) -> Int32
 
 pub fn collect_tokens(RawSyntax) -> Array[RawSyntax]
 
 pub fn comment_trivia(String) -> (String, String)
 
-pub fn compute_token_offsets(RawSyntax) -> Array[(RawSyntax, Int, Int)]
+pub fn compute_token_offsets(RawSyntax) -> Array[(RawSyntax, Int32, Int32)]
 
-pub fn compute_token_offsets_strict(RawSyntax) -> Array[(RawSyntax, Int, Int)]
+pub fn compute_token_offsets_strict(RawSyntax) -> Array[(RawSyntax, Int32, Int32)]
 
-pub fn count_comment_trivia(RawSyntax) -> Int
+pub fn count_comment_trivia(RawSyntax) -> Int32
 
-pub fn count_nodes(RawSyntax) -> Int
+pub fn count_nodes(RawSyntax) -> Int32
 
-pub fn count_tokens(RawSyntax) -> Int
+pub fn count_tokens(RawSyntax) -> Int32
 
 pub fn create_error_recovery_node(String, String) -> RawSyntax
 
@@ -48,7 +48,7 @@ pub fn debug_tree(RawSyntax) -> String
 
 pub fn debug_tree_with_trivia(RawSyntax) -> String
 
-pub fn delete_node_by_path(RawSyntax, Array[Int]) -> RawSyntax
+pub fn delete_node_by_path(RawSyntax, Array[Int32]) -> RawSyntax
 
 pub fn doc_comment_trivia(String) -> (String, String)
 
@@ -60,15 +60,15 @@ pub fn find_error_nodes(RawSyntax) -> Array[RawSyntax]
 
 pub fn find_nodes_of_kind(RawSyntax, String) -> Array[RawSyntax]
 
-pub fn find_path_to_nth_token(RawSyntax, Int) -> Array[Int]?
+pub fn find_path_to_nth_token(RawSyntax, Int32) -> Array[Int32]?
 
-pub fn find_path_to_token_text(RawSyntax, String) -> Array[Int]?
+pub fn find_path_to_token_text(RawSyntax, String) -> Array[Int32]?
 
-pub fn find_paths_to_token_text_all(RawSyntax, String) -> Array[Array[Int]]
+pub fn find_paths_to_token_text_all(RawSyntax, String) -> Array[Array[Int32]]
 
-pub fn find_token_at_offset(RawSyntax, Int) -> RawSyntax?
+pub fn find_token_at_offset(RawSyntax, Int32) -> RawSyntax?
 
-pub fn find_token_at_offset_strict(RawSyntax, Int) -> RawSyntax?
+pub fn find_token_at_offset_strict(RawSyntax, Int32) -> RawSyntax?
 
 pub fn find_tokens_with_text(RawSyntax, String) -> Array[RawSyntax]
 
@@ -76,17 +76,17 @@ pub fn first_child(RawSyntax) -> RawSyntax?
 
 pub fn get_all_leaf_nodes(RawSyntax) -> Array[RawSyntax]
 
-pub fn get_node_by_path(RawSyntax, Array[Int]) -> RawSyntax?
+pub fn get_node_by_path(RawSyntax, Array[Int32]) -> RawSyntax?
 
-pub fn get_node_depth(RawSyntax) -> Int
+pub fn get_node_depth(RawSyntax) -> Int32
 
-pub fn get_tree_width(RawSyntax) -> Int
+pub fn get_tree_width(RawSyntax) -> Int32
 
 pub fn has_newline_trivia(RawSyntax) -> Bool
 
-pub fn insert_child(RawSyntax, Int, RawSyntax) -> RawSyntax
+pub fn insert_child(RawSyntax, Int32, RawSyntax) -> RawSyntax
 
-pub fn insert_node_at_path(RawSyntax, Array[Int], Int, RawSyntax) -> RawSyntax
+pub fn insert_node_at_path(RawSyntax, Array[Int32], Int32, RawSyntax) -> RawSyntax
 
 pub fn is_block_comment_trivia((String, String)) -> Bool
 
@@ -132,7 +132,7 @@ pub fn make_token(String, Array[(String, String)], Array[(String, String)]) -> R
 
 pub fn mark_missing((Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool), Bool) -> (Array[RawSyntax], Array[(String, String)], Array[(String, String)], Bool)
 
-pub fn move_child(RawSyntax, Int, Int) -> RawSyntax
+pub fn move_child(RawSyntax, Int32, Int32) -> RawSyntax
 
 pub fn new_arena() -> Arena
 
@@ -160,13 +160,13 @@ pub fn raw_syntax((RawSyntax, String)) -> RawSyntax
 
 pub fn rebuild_text(RawSyntax) -> String
 
-pub fn remove_child(RawSyntax, Int) -> RawSyntax
+pub fn remove_child(RawSyntax, Int32) -> RawSyntax
 
-pub fn replace_child_text_at(RawSyntax, Int, String) -> RawSyntax
+pub fn replace_child_text_at(RawSyntax, Int32, String) -> RawSyntax
 
-pub fn replace_children_range(RawSyntax, Int, Int, Array[RawSyntax]) -> RawSyntax
+pub fn replace_children_range(RawSyntax, Int32, Int32, Array[RawSyntax]) -> RawSyntax
 
-pub fn replace_node_by_path(RawSyntax, Array[Int], RawSyntax) -> RawSyntax
+pub fn replace_node_by_path(RawSyntax, Array[Int32], RawSyntax) -> RawSyntax
 
 pub fn replace_tokens_text(RawSyntax, String, String) -> RawSyntax
 
@@ -176,7 +176,7 @@ pub fn roundtrip_print_simple(String) -> String
 
 pub fn shebang_trivia(String) -> (String, String)
 
-pub fn splice_children(RawSyntax, Int, Int, Array[RawSyntax]) -> RawSyntax
+pub fn splice_children(RawSyntax, Int32, Int32, Array[RawSyntax]) -> RawSyntax
 
 pub fn strip_leading_whitespace_trivia(RawSyntax) -> RawSyntax
 
@@ -204,7 +204,7 @@ pub fn validate_trivia_ownership_strict(RawSyntax) -> Array[String]
 
 pub fn whitespace_trivia(String) -> (String, String)
 
-pub fn with_child(RawSyntax, Int, RawSyntax) -> RawSyntax
+pub fn with_child(RawSyntax, Int32, RawSyntax) -> RawSyntax
 
 pub fn with_leading_trivia(RawSyntax, Array[(String, String)]) -> RawSyntax
 
@@ -240,9 +240,8 @@ pub type SyntaxBuilder = (Array[RawSyntax], Array[(String, String)], Array[(Stri
 
 pub type SyntaxKind = String
 
-pub type TokenRange = (RawSyntax, Int, Int)
+pub type TokenRange = (RawSyntax, Int32, Int32)
 
 pub type Trivia = (String, String)
 
 // Traits
-

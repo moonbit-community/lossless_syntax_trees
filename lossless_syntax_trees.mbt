@@ -45,7 +45,7 @@ pub type Syntax = (RawSyntax, String) // (raw, node_type)
 ///|
 /// TokenRange 将 token 映射到打印文本中的字符偏移范围
 /// 格式: (token, start_offset, end_offset) 表示 [start, end) 半开区间
-pub type TokenRange = (RawSyntax, Int, Int)
+pub type TokenRange = (RawSyntax, Int32, Int32)
 
 // ==================== Trivia Creation Functions ====================
 
@@ -331,7 +331,7 @@ pub fn is_shebang_trivia(trivia : Trivia) -> Bool {
 /// - raw: 语法节点
 /// 返回: 子节点数量
 /// 复杂度: O(1)
-pub fn child_count(raw : RawSyntax) -> Int {
+pub fn child_count(raw : RawSyntax) -> Int32 {
   array_length(syntax_children(raw))
 }
 
@@ -372,7 +372,7 @@ pub fn last_child(raw : RawSyntax) -> RawSyntax? {
 /// 复杂度: O(n)，其中 n 是子节点数量
 pub fn with_child(
   raw : RawSyntax,
-  index : Int,
+  index : Int32,
   new_child : RawSyntax,
 ) -> RawSyntax {
   let children = syntax_children(raw)
@@ -597,7 +597,7 @@ fn rebuild_trivia_text(trivia_list : Array[Trivia]) -> String {
 /// - list: 数组
 /// 返回: 数组长度
 /// 复杂度: O(n)，其中 n 是数组元素数量
-fn array_length(list : Array[RawSyntax]) -> Int {
+fn array_length(list : Array[RawSyntax]) -> Int32 {
   let mut count = 0
   for _ in list {
     count = count + 1
@@ -614,7 +614,7 @@ fn array_length(list : Array[RawSyntax]) -> Int {
 /// 复杂度: O(n)，其中 n 是数组长度
 fn replace_child_at_index(
   children : Array[RawSyntax],
-  index : Int,
+  index : Int32,
   new_child : RawSyntax,
 ) -> Array[RawSyntax] {
   let mut result = []
@@ -793,7 +793,7 @@ pub fn validate_syntax_tree(raw : RawSyntax) -> Array[String] {
 /// - raw: 根语法节点
 /// 返回: 节点总数
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的子节点数量
-pub fn count_nodes(raw : RawSyntax) -> Int {
+pub fn count_nodes(raw : RawSyntax) -> Int32 {
   let mut count = 1
   let children = syntax_children(raw)
   for child in children {
@@ -807,7 +807,7 @@ pub fn count_nodes(raw : RawSyntax) -> Int {
 /// - raw: 根语法节点
 /// 返回: token 总数
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的子节点数量
-pub fn count_tokens(raw : RawSyntax) -> Int {
+pub fn count_tokens(raw : RawSyntax) -> Int32 {
   let mut count = 0
   if is_token(raw) {
     count = 1
@@ -851,7 +851,7 @@ pub fn has_newline_trivia(raw : RawSyntax) -> Bool {
 /// - raw: 语法节点
 /// 返回: 注释 trivia 总数
 /// 复杂度: O(n * m)，其中 n 是前导 trivia 数量，m 是每个前导 trivia 的文本长度
-pub fn count_comment_trivia(raw : RawSyntax) -> Int {
+pub fn count_comment_trivia(raw : RawSyntax) -> Int32 {
   let mut count = 0
 
   let leading = leading_trivia(raw)
@@ -1395,8 +1395,8 @@ fn rebuild_tree_with_updated_tokens(
 fn rebuild_tree_with_updated_tokens_impl(
   raw : RawSyntax,
   updated_tokens : Array[RawSyntax],
-  start_index : Int,
-) -> (RawSyntax, Int) {
+  start_index : Int32,
+) -> (RawSyntax, Int32) {
   if is_token(raw) {
     let updated = updated_tokens[start_index]
     (updated, start_index + 1)
@@ -1474,7 +1474,7 @@ fn split_trailing_at_first_newline(
 /// 复杂度: O(n)，其中 n 是数组长度
 fn replace_trivia_array_at_index(
   arr : Array[Array[Trivia]],
-  index : Int,
+  index : Int32,
   item : Array[Trivia],
 ) -> Array[Array[Trivia]] {
   let mut result = []
@@ -1495,7 +1495,7 @@ fn replace_trivia_array_at_index(
 /// - list: trivia 列表
 /// 返回: 列表长度
 /// 复杂度: O(n)，其中 n 是 trivia 数量
-fn array_length_trivia(list : Array[Trivia]) -> Int {
+fn array_length_trivia(list : Array[Trivia]) -> Int32 {
   let mut count = 0
   for _ in list {
     count = count + 1
@@ -1508,7 +1508,7 @@ fn array_length_trivia(list : Array[Trivia]) -> Int {
 /// - list: 数组
 /// 返回: 数组长度
 /// 复杂度: O(n)，其中 n 是数组元素数量
-fn array_length_int(list : Array[Int]) -> Int {
+fn array_length_int(list : Array[Int32]) -> Int32 {
   let mut count = 0
   for _ in list {
     count = count + 1
@@ -1527,7 +1527,7 @@ fn array_length_int(list : Array[Int]) -> Int {
 /// 复杂度: O(n)，其中 n 是子节点数量
 pub fn insert_child(
   raw : RawSyntax,
-  index : Int,
+  index : Int32,
   child : RawSyntax,
 ) -> RawSyntax {
   let children = syntax_children(raw)
@@ -1548,7 +1548,7 @@ pub fn insert_child(
 /// - index: 要移除的子节点索引
 /// 返回: 移除后的新语法节点
 /// 复杂度: O(n)，其中 n 是子节点数量
-pub fn remove_child(raw : RawSyntax, index : Int) -> RawSyntax {
+pub fn remove_child(raw : RawSyntax, index : Int32) -> RawSyntax {
   let children = syntax_children(raw)
   let new_children = remove_at_index(children, index)
   RawSyntax::{
@@ -1611,8 +1611,8 @@ pub fn prepend_child(raw : RawSyntax, child : RawSyntax) -> RawSyntax {
 /// 复杂度: O(n)，其中 n 是子节点数量
 pub fn replace_children_range(
   raw : RawSyntax,
-  start : Int,
-  end : Int,
+  start : Int32,
+  end : Int32,
   replacement : Array[RawSyntax],
 ) -> RawSyntax {
   let children = syntax_children(raw)
@@ -1639,8 +1639,8 @@ pub fn replace_children_range(
 /// 复杂度: O(n)，其中 n 是子节点数量
 pub fn splice_children(
   raw : RawSyntax,
-  start : Int,
-  delete_count : Int,
+  start : Int32,
+  delete_count : Int32,
   to_insert : Array[RawSyntax],
 ) -> RawSyntax {
   replace_children_range(raw, start, start + delete_count, to_insert)
@@ -1657,7 +1657,7 @@ pub fn splice_children(
 /// 复杂度: O(n)，其中 n 是子节点数量
 pub fn replace_child_text_at(
   raw : RawSyntax,
-  index : Int,
+  index : Int32,
   new_text : String,
 ) -> RawSyntax {
   let children = syntax_children(raw)
@@ -1735,7 +1735,7 @@ pub fn debug_tree(raw : RawSyntax) -> String {
 /// - indent: 当前缩进级别
 /// 返回: 打印后的字符串
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的文本长度
-fn debug_tree_impl(raw : RawSyntax, indent : Int) -> String {
+fn debug_tree_impl(raw : RawSyntax, indent : Int32) -> String {
   // build indentation
   let mut prefix = ""
   let mut j = 0
@@ -1849,7 +1849,7 @@ fn optimize_trivia_list(trivia_list : Array[Trivia]) -> Array[Trivia] {
 /// - raw: 语法节点
 /// 返回: 节点深度
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的子节点数量
-pub fn get_node_depth(raw : RawSyntax) -> Int {
+pub fn get_node_depth(raw : RawSyntax) -> Int32 {
   let children = syntax_children(raw)
   if array_length(children) == 0 {
     return 1
@@ -1871,7 +1871,7 @@ pub fn get_node_depth(raw : RawSyntax) -> Int {
 /// - raw: 语法树根节点
 /// 返回: 树的宽度
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的子节点数量
-pub fn get_tree_width(raw : RawSyntax) -> Int {
+pub fn get_tree_width(raw : RawSyntax) -> Int32 {
   let children = syntax_children(raw)
   if array_length(children) == 0 {
     return 1
@@ -1924,7 +1924,7 @@ pub fn get_all_leaf_nodes(raw : RawSyntax) -> Array[RawSyntax] {
 /// 复杂度: O(n)，其中 n 是数组长度
 fn insert_at_index(
   arr : Array[RawSyntax],
-  index : Int,
+  index : Int32,
   item : RawSyntax,
 ) -> Array[RawSyntax] {
   let mut result = []
@@ -1951,7 +1951,7 @@ fn insert_at_index(
 /// - index: 要移除的元素索引
 /// 返回: 移除后的新数组
 /// 复杂度: O(n)，其中 n 是数组长度
-fn remove_at_index(arr : Array[RawSyntax], index : Int) -> Array[RawSyntax] {
+fn remove_at_index(arr : Array[RawSyntax], index : Int32) -> Array[RawSyntax] {
   let mut result = []
   let mut current_index = 0
 
@@ -1977,8 +1977,8 @@ fn remove_at_index(arr : Array[RawSyntax], index : Int) -> Array[RawSyntax] {
 /// 复杂度: O(n)，其中 n 是数组长度
 fn replace_range_in_array(
   arr : Array[RawSyntax],
-  start : Int,
-  end : Int,
+  start : Int32,
+  end : Int32,
   replacement : Array[RawSyntax],
 ) -> Array[RawSyntax] {
   let mut result = []
@@ -2015,7 +2015,7 @@ fn replace_range_in_array(
 /// - s: 字符串
 /// 返回: 字符串长度
 /// 复杂度: O(n)，其中 n 是字符串字符数量
-fn string_length(s : String) -> Int {
+fn string_length(s : String) -> Int32 {
   let mut len = 0
   for _ in s {
     len = len + 1
@@ -2028,7 +2028,7 @@ fn string_length(s : String) -> Int {
 /// - list: trivia 列表
 /// 返回: 列表总文本长度
 /// 复杂度: O(n * m)，其中 n 是 trivia 数量，m 是每个 trivia 的文本长度
-fn trivia_text_length(list : Array[Trivia]) -> Int {
+fn trivia_text_length(list : Array[Trivia]) -> Int32 {
   let mut len = 0
   for t in list {
     len = len + string_length(t.1)
@@ -2041,7 +2041,7 @@ fn trivia_text_length(list : Array[Trivia]) -> Int {
 /// - tok: 原始 token
 /// 返回: token 的总文本长度
 /// 复杂度: O(1)
-fn token_total_length(tok : RawSyntax) -> Int {
+fn token_total_length(tok : RawSyntax) -> Int32 {
   let lead = trivia_text_length(leading_trivia(tok))
   let core = string_length(syntax_text(tok))
   let trail = trivia_text_length(trailing_trivia(tok))
@@ -2099,7 +2099,7 @@ fn compute_token_offsets_from_normalized(
 /// - offset: 偏移量
 /// 返回: 找到的 token，如果不存在则返回 None
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的文本长度
-pub fn find_token_at_offset(raw : RawSyntax, offset : Int) -> RawSyntax? {
+pub fn find_token_at_offset(raw : RawSyntax, offset : Int32) -> RawSyntax? {
   let ranges = compute_token_offsets(raw)
   for entry in ranges {
     if offset >= entry.1 && offset < entry.2 {
@@ -2115,7 +2115,10 @@ pub fn find_token_at_offset(raw : RawSyntax, offset : Int) -> RawSyntax? {
 /// - offset: 偏移量
 /// 返回: 找到的 token，如果不存在则返回 None
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的文本长度
-pub fn find_token_at_offset_strict(raw : RawSyntax, offset : Int) -> RawSyntax? {
+pub fn find_token_at_offset_strict(
+  raw : RawSyntax,
+  offset : Int32,
+) -> RawSyntax? {
   let ranges = compute_token_offsets_strict(raw)
   for entry in ranges {
     if offset >= entry.1 && offset < entry.2 {
@@ -2204,7 +2207,7 @@ fn trivia_equal(x : Trivia, y : Trivia) -> Bool {
 /// - text: 要匹配的文本内容
 /// 返回: 找到的路径，如果不存在则返回 None
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的子节点数量
-pub fn find_path_to_token_text(raw : RawSyntax, text : String) -> Array[Int]? {
+pub fn find_path_to_token_text(raw : RawSyntax, text : String) -> Array[Int32]? {
   find_path_to_token_text_impl(raw, text, [])
 }
 
@@ -2218,8 +2221,8 @@ pub fn find_path_to_token_text(raw : RawSyntax, text : String) -> Array[Int]? {
 fn find_path_to_token_text_impl(
   raw : RawSyntax,
   text : String,
-  prefix : Array[Int],
-) -> Array[Int]? {
+  prefix : Array[Int32],
+) -> Array[Int32]? {
   if is_token(raw) {
     if syntax_text(raw) == text {
       return Some(prefix)
@@ -2245,7 +2248,7 @@ fn find_path_to_token_text_impl(
 /// - path: 路径（子节点索引数组）
 /// 返回: 找到的语法节点，如果不存在则返回 None
 /// 复杂度: O(n)，其中 n 是路径长度
-pub fn get_node_by_path(raw : RawSyntax, path : Array[Int]) -> RawSyntax? {
+pub fn get_node_by_path(raw : RawSyntax, path : Array[Int32]) -> RawSyntax? {
   let mut current = raw
   for index in path {
     match get_child_at_index(syntax_children(current), index) {
@@ -2265,7 +2268,7 @@ pub fn get_node_by_path(raw : RawSyntax, path : Array[Int]) -> RawSyntax? {
 /// 复杂度: O(n)，其中 n 是路径长度
 pub fn replace_node_by_path(
   raw : RawSyntax,
-  path : Array[Int],
+  path : Array[Int32],
   replacement : RawSyntax,
 ) -> RawSyntax {
   replace_node_by_path_impl(raw, path, 0, replacement)
@@ -2281,8 +2284,8 @@ pub fn replace_node_by_path(
 /// 复杂度: O(n)，其中 n 是路径长度
 fn replace_node_by_path_impl(
   current : RawSyntax,
-  path : Array[Int],
-  depth : Int,
+  path : Array[Int32],
+  depth : Int32,
   replacement : RawSyntax,
 ) -> RawSyntax {
   if depth == array_length_int(path) {
@@ -2324,7 +2327,7 @@ fn replace_node_by_path_impl(
 /// - index: 子节点索引
 /// 返回: 找到的子节点，如果不存在则返回 None
 /// 复杂度: O(n)，其中 n 是子节点数量
-fn get_child_at_index(children : Array[RawSyntax], index : Int) -> RawSyntax? {
+fn get_child_at_index(children : Array[RawSyntax], index : Int32) -> RawSyntax? {
   let mut i = 0
   for c in children {
     if i == index {
@@ -2384,7 +2387,7 @@ pub fn replace_tokens_text(
 pub fn find_paths_to_token_text_all(
   raw : RawSyntax,
   text : String,
-) -> Array[Array[Int]] {
+) -> Array[Array[Int32]] {
   find_paths_to_token_text_all_impl(raw, text, [])
 }
 
@@ -2398,9 +2401,9 @@ pub fn find_paths_to_token_text_all(
 fn find_paths_to_token_text_all_impl(
   raw : RawSyntax,
   text : String,
-  prefix : Array[Int],
-) -> Array[Array[Int]] {
-  let mut results : Array[Array[Int]] = []
+  prefix : Array[Int32],
+) -> Array[Array[Int32]] {
+  let mut results : Array[Array[Int32]] = []
   if is_token(raw) {
     if syntax_text(raw) == text {
       results = results + [prefix]
@@ -2425,7 +2428,7 @@ fn find_paths_to_token_text_all_impl(
 /// - n: 目标 token 的索引
 /// 返回: 找到的路径，如果不存在则返回 None
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的子节点数量
-pub fn find_path_to_nth_token(raw : RawSyntax, n : Int) -> Array[Int]? {
+pub fn find_path_to_nth_token(raw : RawSyntax, n : Int32) -> Array[Int32]? {
   let (found, _) = find_path_to_nth_token_impl(raw, n, [], 0)
   found
 }
@@ -2440,10 +2443,10 @@ pub fn find_path_to_nth_token(raw : RawSyntax, n : Int) -> Array[Int]? {
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的子节点数量
 fn find_path_to_nth_token_impl(
   raw : RawSyntax,
-  target : Int,
-  prefix : Array[Int],
-  seen : Int,
-) -> (Array[Int]?, Int) {
+  target : Int32,
+  prefix : Array[Int32],
+  seen : Int32,
+) -> (Array[Int32]?, Int32) {
   if is_token(raw) {
     if seen == target {
       return (Some(prefix), seen + 1)
@@ -2478,7 +2481,7 @@ fn find_path_to_nth_token_impl(
 /// - path: 路径（子节点索引数组）
 /// 返回: 删除后的新语法节点
 /// 复杂度: O(n)，其中 n 是路径长度
-pub fn delete_node_by_path(raw : RawSyntax, path : Array[Int]) -> RawSyntax {
+pub fn delete_node_by_path(raw : RawSyntax, path : Array[Int32]) -> RawSyntax {
   if array_length_int(path) == 0 {
     return raw
   }
@@ -2494,8 +2497,8 @@ pub fn delete_node_by_path(raw : RawSyntax, path : Array[Int]) -> RawSyntax {
 /// 复杂度: O(n)，其中 n 是路径长度
 fn delete_node_by_path_impl(
   current : RawSyntax,
-  path : Array[Int],
-  depth : Int,
+  path : Array[Int32],
+  depth : Int32,
 ) -> RawSyntax {
   let idx = path[depth]
   let children = syntax_children(current)
@@ -2541,8 +2544,8 @@ fn delete_node_by_path_impl(
 /// 复杂度: O(n)，其中 n 是路径长度
 pub fn insert_node_at_path(
   raw : RawSyntax,
-  path : Array[Int],
-  index : Int,
+  path : Array[Int32],
+  index : Int32,
   new_child : RawSyntax,
 ) -> RawSyntax {
   insert_node_at_path_impl(raw, path, 0, index, new_child)
@@ -2559,9 +2562,9 @@ pub fn insert_node_at_path(
 /// 复杂度: O(n)，其中 n 是路径长度
 fn insert_node_at_path_impl(
   current : RawSyntax,
-  path : Array[Int],
-  depth : Int,
-  index : Int,
+  path : Array[Int32],
+  depth : Int32,
+  index : Int32,
   new_child : RawSyntax,
 ) -> RawSyntax {
   if depth == array_length_int(path) {
@@ -2607,7 +2610,7 @@ fn insert_node_at_path_impl(
 /// 复杂度: O(n)，其中 n 是路径长度
 pub fn append_node_at_path(
   raw : RawSyntax,
-  path : Array[Int],
+  path : Array[Int32],
   new_child : RawSyntax,
 ) -> RawSyntax {
   append_node_at_path_impl(raw, path, 0, new_child)
@@ -2623,8 +2626,8 @@ pub fn append_node_at_path(
 /// 复杂度: O(n)，其中 n 是路径长度
 fn append_node_at_path_impl(
   current : RawSyntax,
-  path : Array[Int],
-  depth : Int,
+  path : Array[Int32],
+  depth : Int32,
   new_child : RawSyntax,
 ) -> RawSyntax {
   if depth == array_length_int(path) {
@@ -2722,7 +2725,7 @@ pub fn new_arena() -> Arena {
 /// - arena: Arena
 /// 返回: token 数量
 /// 复杂度: O(1)
-pub fn arena_token_count(arena : Arena) -> Int {
+pub fn arena_token_count(arena : Arena) -> Int32 {
   array_length(arena.tokens)
 }
 
@@ -2731,7 +2734,7 @@ pub fn arena_token_count(arena : Arena) -> Int {
 /// - arena: Arena
 /// 返回: 节点数量
 /// 复杂度: O(1)
-pub fn arena_node_count(arena : Arena) -> Int {
+pub fn arena_node_count(arena : Arena) -> Int32 {
   array_length(arena.nodes)
 }
 
@@ -2829,7 +2832,7 @@ pub fn debug_tree_with_trivia(raw : RawSyntax) -> String {
 /// - indent: 当前缩进级别
 /// 返回: 打印后的字符串
 /// 复杂度: O(n * m)，其中 n 是节点数量，m 是每个节点的文本长度
-fn debug_tree_with_trivia_impl(raw : RawSyntax, indent : Int) -> String {
+fn debug_tree_with_trivia_impl(raw : RawSyntax, indent : Int32) -> String {
   let mut prefix = ""
   let mut j = 0
   while j < indent {
@@ -2934,8 +2937,8 @@ pub fn prune_missing_nodes(raw : RawSyntax) -> RawSyntax {
 /// 复杂度: O(n)，其中 n 是子节点数量
 pub fn move_child(
   raw : RawSyntax,
-  from_index : Int,
-  to_index : Int,
+  from_index : Int32,
+  to_index : Int32,
 ) -> RawSyntax {
   if from_index == to_index {
     return raw
